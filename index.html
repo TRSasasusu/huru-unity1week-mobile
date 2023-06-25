@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ふる</title>
+    <script>
+    let prevAlpha = 0;
+    let prevBeta = 0;
+    let prevGamma = 0;
+    let total = 0;
+    window.addEventListener('deviceorientation', function(event) {
+        let alpha = event.alpha;
+        let beta = event.beta;
+        let gamma = event.gamma;
+
+        total += (alpha - prevAlpha) * (alpha - prevAlpha) + (beta - prevBeta) * (beta - prevBeta) + (gamma - prevGamma) * (gamma - prevGamma);
+
+        if(total >= 1000000) {
+            document.getElementById('bottle').src = 'img/answer.png';
+        }
+        else if(total >= 800000) {
+            document.getElementById('bottle').src = 'img/bottle-end.png';
+        }
+        else if(total >= 100000) {
+            document.getElementById('bottle').src = 'img/bottle-3rd.png';
+        }
+        else if(total >= 5000) {
+            document.getElementById('bottle').src = 'img/bottle-2nd.png';
+        }
+
+        prevAlpha = alpha;
+        prevBeta = beta;
+        prevGamma = gamma;
+    }, true);
+    </script>
+</head>
+<body>
+    <img style="width:100%" id="bottle" src="img/bottle-1st.png">
+</body>
+</html>
