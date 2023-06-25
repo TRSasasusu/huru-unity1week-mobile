@@ -7,12 +7,17 @@
     let prevBeta = 0;
     let prevGamma = 0;
     let total = 0;
+    let div = null;
     window.addEventListener('deviceorientation', function(event) {
         let alpha = event.alpha;
         let beta = event.beta;
         let gamma = event.gamma;
 
         total += (alpha - prevAlpha) * (alpha - prevAlpha) + (beta - prevBeta) * (beta - prevBeta) + (gamma - prevGamma) * (gamma - prevGamma);
+        if(div == null) {
+            div = document.getElementById('total');
+        }
+        div.innerText = total;
 
         if(total >= 250000) {
             document.getElementById('bottle').src = 'img/answer.png';
@@ -34,6 +39,7 @@
     </script>
 </head>
 <body>
+    <div id="total"></div>
     <img style="width:100%" id="bottle" src="img/bottle-1st.png">
 </body>
 </html>
