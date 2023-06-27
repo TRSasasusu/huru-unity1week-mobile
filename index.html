@@ -8,6 +8,23 @@
     let prevGamma = 0;
     let total = 0;
     let div = null;
+
+    let imgs = null;
+    function setDisplay(index) {
+        if(imgs == null) {
+            return;
+        }
+
+        for(let i = 0; i < imgs.length; ++i) {
+            if(i == index) {
+                imgs[i].style.display = '';
+            }
+            else {
+                imgs[i].style.display = 'none';
+            }
+        }
+    }
+
     window.addEventListener('deviceorientation', function(event) {
         let alpha = event.alpha;
         let beta = event.beta;
@@ -20,26 +37,44 @@
         div.innerText = total;
 
         if(total >= 1800000) {
-            document.getElementById('bottle').src = 'img/answer.png';
+            //document.getElementById('bottle').src = 'img/answer.png'; // it is unstable in Firefox mobile and Safari maybe.
+            setDisplay(4);
         }
         else if(total >= 1000000) {
-            document.getElementById('bottle').src = 'img/bottle-end.png';
+            //document.getElementById('bottle').src = 'img/bottle-end.png';
+            setDisplay(3);
         }
         else if(total >= 200000) {
-            document.getElementById('bottle').src = 'img/bottle-3rd.png';
+            //document.getElementById('bottle').src = 'img/bottle-3rd.png';
+            setDisplay(2);
         }
         else if(total >= 5000) {
-            document.getElementById('bottle').src = 'img/bottle-2nd.png';
+            //document.getElementById('bottle').src = 'img/bottle-2nd.png';
+            setDisplay(1);
         }
 
         prevAlpha = alpha;
         prevBeta = beta;
         prevGamma = gamma;
     }, true);
+
+    window.onload = function() {
+        imgs = [
+            document.getElementById('bottle-1st'),
+            document.getElementById('bottle-2nd'),
+            document.getElementById('bottle-3rd'),
+            document.getElementById('bottle-end'),
+            document.getElementById('answer'),
+        ];
+    };
     </script>
 </head>
 <body>
     <div id="total"></div>
-    <img style="width:100%" id="bottle" src="img/bottle-1st.png">
+    <img style="width:100%" id="bottle-1st" src="img/bottle-1st.png">
+    <img style="width:100%;display:none" id="bottle-2nd" src="img/bottle-2nd.png">
+    <img style="width:100%;display:none" id="bottle-3rd" src="img/bottle-3rd.png">
+    <img style="width:100%;display:none" id="bottle-end" src="img/bottle-end.png">
+    <img style="width:100%;display:none" id="answer" src="img/answer.png">
 </body>
 </html>
